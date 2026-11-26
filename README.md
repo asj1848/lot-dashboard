@@ -12,6 +12,7 @@ AID 해커톤 C주제 MVP 시안입니다. 모든 수치는 가상 데이터입�
 | `live.html` | 휴대폰용 LOT 품질 알림 앱 (이탈 예고 포함) |
 | `process.html` | 공정 변수 CCR 콘솔 + 현장 작업자 단말 미리보기 |
 | `process.html?role=worker` | 현장 작업자 단말 (휴대폰) |
+| `how.html` | 구현 방식 — CCR에서 현장까지 어떻게 연결하나 |
 | `qr.html` | 휴대폰 접속 QR |
 
 ## 온라인(GitHub Pages)과 발표 PC의 차이
