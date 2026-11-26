@@ -57,111 +57,117 @@ h1,h2,h3,h4{margin:0;text-wrap:balance}
 .seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
 .empty{padding:18px 10px;text-align:center;color:var(--muted);font-size:.84rem}
 
-/* ---------- CCR 콘솔 ---------- */
-.ccr{max-width:1480px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
-.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:14px}
-.topbar h1{font-size:1.45rem;letter-spacing:-.01em}
-.sub{color:var(--muted);font-size:.86rem;margin-top:2px}
+/* ---------- CCR 콘솔: 한 화면 요약형 ----------
+   읽는 순서: ① 지금 할 일(배너) → ② 공정 한눈에(값만) → ③ 판단할 권고 1건 → ④ 상세는 탭(추세·지시·이력)
+   역할 설명은 how.html, 데모 조작은 버튼 뒤 서랍으로 빼서 발표 화면에 보이는 양을 줄임 */
+.ccr{max-width:1480px;margin:0 auto;padding:14px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.topbar h1{font-size:1.25rem;letter-spacing:-.01em}
+.topbar h1 .sub{font-size:.82rem;font-weight:400;color:var(--muted);margin-left:4px}
 .hdr-r{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.conn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;padding:4px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.conn{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;padding:4px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
 .conn i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
 .conn.on i{background:var(--ok)} .conn.local i{background:var(--warn)} .conn.err i{background:var(--bad)}
-.op{font-size:.8rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
-.op input{width:116px;padding:5px 8px;border-radius:7px;border:1px solid var(--line);background:var(--surface)}
-.links{display:flex;gap:12px;font-size:.8rem}
-.links a{color:var(--accent);font-weight:600;text-decoration:none}
-.ccr-body{display:grid;grid-template-columns:minmax(0,1fr) 372px;gap:16px;align-items:start}
-.ccr-main{display:flex;flex-direction:column;gap:14px;min-width:0}
-.ccr-side{position:sticky;top:12px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.op{font-size:.78rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.op input{width:100px;padding:4px 8px;border-radius:7px;border:1px solid var(--line);background:var(--surface)}
+.btn[aria-expanded="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+.now{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.now.ok{background:var(--ok-soft)} .now.act{background:var(--warn-soft)} .now.bad{background:var(--bad-soft)} .now.run{background:var(--accent-soft)}
+.now .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:1.05rem;color:#fff;flex-shrink:0}
+.now.ok .ic{background:var(--ok)} .now.act .ic{background:var(--warn)} .now.bad .ic{background:var(--bad)} .now.run .ic{background:var(--accent)}
+.now .msg{flex:1;min-width:220px}
+.now .msg b{display:block;font-size:1.08rem}
+.now.ok .msg b{color:var(--ok)} .now.act .msg b{color:var(--warn)} .now.bad .msg b{color:var(--bad)} .now.run .msg b{color:var(--accent)}
+.now .msg span{font-size:.84rem;color:var(--muted)}
+.now .mini{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.74rem;color:var(--muted)}
+.now .mini b{display:block;font-family:var(--f-mono);font-size:1.02rem;color:var(--fg)}
+
+.ccr-body{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;align-items:start}
+.ccr-main{display:flex;flex-direction:column;gap:12px;min-width:0}
+.ccr-side{position:sticky;top:12px;display:flex;flex-direction:column;align-items:center;gap:8px}
 @media (max-width:1200px){.ccr-body{grid-template-columns:minmax(0,1fr)}.ccr-side{position:static}}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
-.panel-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}
-.panel-h h2{font-size:1rem;font-weight:600}
-.cnt{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--warn);color:#fff;font-size:.72rem;font-family:var(--f-mono);margin-left:4px;vertical-align:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.panel-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+.panel-h h2{font-size:.98rem;font-weight:600}
+.cnt{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--warn);color:#fff;font-size:.72rem;font-family:var(--f-mono);margin-left:5px;vertical-align:1px}
 .cnt:empty{display:none}
+.key{display:inline-flex;flex-wrap:wrap;gap:10px;font-size:.74rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:4px}
+.key i{width:8px;height:8px;border-radius:50%;display:inline-block}
 
-.duty{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0}
-.duty>div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
-.duty>div.c{border-color:var(--accent);background:var(--accent-soft)}
-.duty b{display:block;font-size:.84rem}
-.duty span:not(.who){font-size:.72rem;color:var(--muted);display:block}
-.who{display:inline-block;font-size:.64rem;font-weight:700;letter-spacing:.04em;padding:1px 6px;border-radius:5px;background:var(--surface-2);color:var(--muted);margin-bottom:3px}
-.duty .c .who{background:var(--accent);color:var(--surface)}
-.duty-note{grid-column:1/-1;margin:0;font-size:.76rem;color:var(--muted);padding:2px 2px 0}
-.duty-note b{display:inline;font-size:inherit;color:var(--fg)}
-@media (max-width:760px){.duty{grid-template-columns:1fr 1fr}}
-
-.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.kpis div{background:var(--surface);padding:10px 14px}
-.kpis b{display:block;font-family:var(--f-mono);font-size:1.35rem;font-weight:600}
-.kpis span{font-size:.76rem;color:var(--muted)}
-@media (max-width:640px){.kpis{grid-template-columns:1fr 1fr}}
-
-.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
 @media (max-width:1000px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:620px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.step{background:var(--surface-2);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;min-width:0}
-.step-h{display:flex;align-items:center;gap:6px;font-size:.84rem;padding:0 2px}
-.step-h .sn{width:18px;height:18px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-size:.68rem;font-weight:700;flex-shrink:0}
-.step-h .zn{margin-left:auto;font-size:.66rem;color:var(--muted);white-space:nowrap}
-.vrow{display:flex;flex-direction:column;gap:1px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:8px;padding:7px 8px;min-width:0;width:100%}
+.step{background:var(--surface-2);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.step-h{display:flex;align-items:center;gap:6px;font-size:.8rem;padding:1px 3px}
+.step-h .sn{width:17px;height:17px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-size:.64rem;font-weight:700;flex-shrink:0}
+.step-h .zn{margin-left:auto;font-size:.64rem;color:var(--muted);white-space:nowrap}
+.vrow{display:flex;align-items:baseline;gap:5px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:7px;padding:5px 7px;min-width:0;width:100%}
 .vrow.st-pre{border-left-color:var(--accent);background:var(--accent-soft)}
 .vrow.st-bad{border-left-color:var(--bad);background:var(--bad-soft)}
 .vrow.sel{outline:2px solid var(--accent);outline-offset:1px}
-.vr-top{display:flex;align-items:center;gap:4px;justify-content:space-between;min-width:0}
-.vn{font-size:.74rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.vr-mid{display:flex;align-items:baseline;gap:3px}
-.vv{font-size:1.08rem;font-weight:600}
+.vn{flex:1;min-width:0;font-size:.74rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vv{font-size:.92rem;font-weight:600}
+.vu{font-size:.62rem;color:var(--muted)}
 .vrow.st-bad .vv{color:var(--bad)} .vrow.st-pre .vv{color:var(--accent)}
-.vu{font-size:.7rem;color:var(--muted)}
-.vr-bot{display:flex;align-items:center;gap:6px}
-.vt{font-size:.64rem;color:var(--muted);white-space:nowrap}
-.spk{flex:1;height:18px;min-width:0;display:block}
-.chipx{font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:999px;white-space:nowrap}
+.chipx{font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:999px;white-space:nowrap;align-self:center}
 .chipx.r{background:var(--warn-soft);color:var(--warn)} .chipx.o{background:var(--accent);color:var(--surface)}
-.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.74rem;color:var(--muted);margin-top:10px}
+
+.work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:12px;align-items:start}
+@media (max-width:980px){.work{grid-template-columns:minmax(0,1fr)}}
+
+.okstate{text-align:center;padding:28px 10px;color:var(--muted);font-size:.86rem}
+.okstate b{display:block;color:var(--ok);font-size:1.02rem;margin-bottom:4px}
+.focus{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.focus.sev-bad,.focus.sev-safety{border-left-color:var(--bad)}
+.focus.sev-safety{background:var(--bad-soft)}
+.focus.hold{opacity:.75}
+.f-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.f-h .tm{margin-left:auto;font-size:.72rem;color:var(--muted);font-family:var(--f-mono)}
+.f-t{font-size:1.1rem;font-weight:700;line-height:1.35}
+.f-r{font-size:.84rem}
+.f-i{font-size:.8rem;color:var(--muted)}
+.f-act{background:var(--surface-2);border-radius:8px;padding:8px 10px;font-size:.86rem}
+.f-act .lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.f-act textarea{width:100%;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);resize:vertical;font-size:.84rem}
+.linkbtn{border:0;background:none;color:var(--accent);font-weight:600;font-size:.76rem;padding:0}
+.f-f{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.f-f select{padding:5px 8px;border-radius:7px;border:1px solid var(--line);background:var(--surface)}
+.lbl-in{font-size:.78rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.f-b{display:flex;flex-wrap:wrap;gap:6px}
+.f-b .btn.primary{flex:1;justify-content:center;padding:10px 12px;font-size:.9rem}
+.rec-safe{font-size:.78rem;background:var(--surface);border:1px dashed var(--bad);color:var(--bad);border-radius:8px;padding:6px 8px}
+.okback{color:var(--ok);font-size:.78rem;font-weight:600}
+.others{display:flex;flex-direction:column;gap:4px;margin-top:10px}
+.orow{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 9px;font-size:.8rem}
+.orow .tm{margin-left:auto;font-size:.7rem;color:var(--muted);font-family:var(--f-mono)}
+.footnote{font-size:.74rem;color:var(--muted);margin:10px 0 0;padding-top:8px;border-top:1px solid var(--line)}
+.footnote a{color:var(--accent);font-weight:600}
+
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:-2px 0 10px}
+.tabs button{border:0;background:none;padding:6px 12px 8px;font-size:.88rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.pane-t{font-size:.86rem;font-weight:600;margin-bottom:4px}
+.chart svg{width:100%;height:auto;display:block}
+.dinfo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.dinfo>div{background:var(--surface-2);border-radius:8px;padding:6px 9px}
+.dinfo .k{font-size:.68rem;color:var(--muted)} .dinfo .v{font-weight:600;font-size:.84rem}
+.dreason{margin:8px 0 0;font-size:.84rem;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.72rem;color:var(--muted);margin-top:8px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
-.lg-s{width:12px;height:12px;border-radius:3px;border:1px solid var(--line);border-left:4px solid}
 .lg-l{width:18px;height:0;border-top:2px solid}
 .lg-b{width:14px;height:10px;background:var(--accent-soft);border-radius:2px}
-
-.grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px;align-items:start}
-@media (max-width:980px){.grid2{grid-template-columns:minmax(0,1fr)}}
-.chart svg{width:100%;height:auto;display:block}
-.dinfo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}
-.dinfo>div{background:var(--surface-2);border-radius:8px;padding:6px 9px}
-.dinfo .k{font-size:.68rem;color:var(--muted)} .dinfo .v{font-weight:600;font-size:.86rem}
-.dreason{margin:8px 0 0;font-size:.84rem;font-weight:600}
-
-.recs{display:flex;flex-direction:column;gap:10px}
-.rec{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
-.rec.sev-bad,.rec.sev-safety{border-left-color:var(--bad)}
-.rec.sev-safety{background:var(--bad-soft)}
-.rec.hold{opacity:.72}
-.rec-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.rec-h .tm{margin-left:auto;font-size:.72rem;color:var(--muted);font-family:var(--f-mono)}
-.rec-r{font-size:.84rem}
-.rec-i{font-size:.8rem;color:var(--muted)}
-.rec-safe{font-size:.78rem;background:var(--surface);border:1px dashed var(--bad);color:var(--bad);border-radius:8px;padding:6px 8px}
-.lbl{font-size:.72rem;color:var(--muted);font-weight:600}
-.rec textarea{width:100%;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);resize:vertical;font-size:.84rem}
-.rec-f{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.rec-f select{padding:5px 8px;border-radius:7px;border:1px solid var(--line);background:var(--surface)}
-.lbl-in{font-size:.78rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
-.rec-b{display:flex;flex-wrap:wrap;gap:6px}
-.okback{color:var(--ok);font-size:.78rem;font-weight:600}
-
 .ords{display:flex;flex-direction:column;gap:6px}
-.ord{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:9px}
+.ord{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:9px}
 .ord.overdue{background:var(--bad-soft);border-color:var(--bad)}
 .ord.st-closed{opacity:.55}
 .ord.st-help{border-color:var(--warn);background:var(--warn-soft)}
 .ord-t{font-weight:600;font-size:.86rem}
 .ord-s{font-size:.74rem;color:var(--muted)}
-.ord-m{font-size:.8rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-@media (max-width:640px){.ord{grid-template-columns:minmax(0,1fr)}}
-
-.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;max-height:360px;overflow-y:auto;font-size:.8rem}
+.ord-m{grid-column:1;font-size:.8rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ord>div:last-child{grid-column:2;grid-row:1/3}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;max-height:320px;overflow-y:auto;font-size:.8rem}
 .log li{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:8px;align-items:baseline;padding:5px 2px;border-bottom:1px solid var(--line)}
 .log .tm{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
 .log .k{font-size:.64rem;font-weight:700;padding:1px 6px;border-radius:5px;background:var(--surface-2);color:var(--muted);white-space:nowrap}
@@ -169,8 +175,8 @@ h1,h2,h3,h4{margin:0;text-wrap:balance}
 .log .k.order,.log .k.ccr{background:var(--accent);color:var(--surface)} .log .k.field{background:var(--ok-soft);color:var(--ok)}
 .log .k.recover{background:var(--ok);color:var(--surface)}
 
-.faults{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-@media (max-width:760px){.faults{grid-template-columns:1fr 1fr}}
+.drawer{position:fixed;left:16px;bottom:16px;z-index:40;width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.faults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
 .faults button{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 9px;text-align:left}
 .faults button b{display:block;font-size:.8rem}
 .faults button span{font-size:.7rem;color:var(--muted)}
@@ -178,9 +184,11 @@ h1,h2,h3,h4{margin:0;text-wrap:balance}
 .faults button.safety b{color:var(--bad)}
 .sim-c{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
 
-.side-h{width:min(360px,100%);display:flex;flex-direction:column}
-.phone{position:relative;width:360px;max-width:100%;height:min(740px,calc(100vh - 110px));min-height:580px;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow)}
-.connect{width:min(360px,100%);font-size:.8rem;display:flex;flex-direction:column;gap:6px}
+.side-h{width:min(340px,100%);display:flex;flex-direction:column}
+.phone{position:relative;width:340px;max-width:100%;height:min(660px,calc(100vh - 150px));min-height:540px;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow)}
+.connect{width:min(340px,100%);font-size:.8rem;padding:10px 14px}
+.connect summary{cursor:pointer;font-weight:600}
+.connect>div{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .connect .url{font-family:var(--f-mono);font-size:.76rem;word-break:break-all;background:var(--surface-2);padding:6px 8px;border-radius:7px}
 .qr{display:flex;justify-content:center}
 .qr svg,.qr img{width:150px;height:150px;background:#fff;padding:6px;border-radius:8px}
@@ -265,89 +273,69 @@ h1,h2,h3,h4{margin:0;text-wrap:balance}
 
 <div class="ccr" id="ccr" hidden>
   <header class="topbar">
-    <div>
-      <div class="eyebrow">AID 해커톤 · C주제 · 공정 변수 연동 데모</div>
-      <h1>공정 모니터링 · CCR 콘솔</h1>
-      <div class="sub">DCS 데이터를 읽기 전용으로 받아 감지·권고만 합니다. 판단과 운전 조작은 CCR이 합니다.</div>
-    </div>
+    <h1>CCR 콘솔<span class="sub">공정 변수 감시 · 현장 지시 승인</span></h1>
     <div class="hdr-r">
       <span class="conn" id="conn"><i></i><span>연결 확인 중</span></span>
       <label class="op">운전원 <input id="opName" autocomplete="off"></label>
-      <button class="btn sm" type="button" id="ccrSnd" aria-pressed="true">CCR 알림음 켬</button>
-      <nav class="links" aria-label="다른 화면"><a href="index.html">품질 대시보드</a><a href="live.html">품질 알림 앱</a></nav>
+      <button class="btn sm" type="button" id="ccrSnd" aria-pressed="true">알림음 켬</button>
+      <button class="btn sm" type="button" id="demoBtn" aria-expanded="false" aria-controls="drawer">데모 컨트롤</button>
+      <a class="btn sm" href="how.html">구현 방식</a>
+      <a class="btn sm ghost" href="start.html">다른 화면</a>
     </div>
   </header>
 
+  <section class="now" id="now" aria-live="polite"></section>
+
   <div class="ccr-body">
     <main class="ccr-main">
-      <section class="duty" aria-label="역할 분담">
-        <div><span class="who">시스템</span><b>① 감지·권고</b><span>DCS 값에서 이상 조짐을 찾아 조치안 제시</span></div>
-        <div class="c"><span class="who">CCR</span><b>② 판단·승인</b><span>지시 여부·내용·담당·우선순위 결정</span></div>
-        <div><span class="who">시스템</span><b>③ 현장 전달</b><span>담당 단말에 진동·소리, 미응답 시 재알림</span></div>
-        <div><span class="who">작업자</span><b>④ 조치·보고</b><span>확인·출동 → 완료 보고</span></div>
-        <div class="c"><span class="who">CCR</span><b>⑤ 확인·종료</b><span>DCS 값 회복을 보고 종료</span></div>
-        <p class="duty-note"><b>운전 조작(설정값 변경 등)은 DCS에서만</b> 합니다. 이 시스템은 DCS에 값을 쓰지 않고, 안전 알람·인터록은 DCS/SIS가 우선 처리합니다.</p>
-      </section>
-
-      <div class="kpis" id="kpis"></div>
-
       <section class="panel">
-        <div class="panel-h"><h2>공정 흐름 · 변수 현황</h2><span class="note">변수를 누르면 아래에 추세가 나옵니다</span></div>
+        <div class="panel-h"><h2>공정 한눈에</h2>
+          <span class="key"><span><i style="background:var(--ok)"></i>정상</span><span><i style="background:var(--accent)"></i>이탈 예고</span><span><i style="background:var(--bad)"></i>운전한계 이탈</span><span>· 누르면 추세</span></span></div>
         <div class="flow" id="flow"></div>
-        <div class="legend">
-          <span><i class="lg-s" style="border-left-color:var(--ok)"></i>정상</span>
-          <span><i class="lg-s" style="border-left-color:var(--accent);background:var(--accent-soft)"></i>이탈 예고 (한계 근접·추세)</span>
-          <span><i class="lg-s" style="border-left-color:var(--bad);background:var(--bad-soft)"></i>운전한계 이탈</span>
-          <span><span class="chipx r">권고 대기</span> CCR 판단 전</span>
-          <span><span class="chipx o">조치 중</span> 현장 지시 진행</span>
-        </div>
       </section>
 
-      <div class="grid2">
+      <div class="work">
         <section class="panel">
-          <div class="panel-h"><h2 id="detTitle">변수 추세</h2></div>
-          <div id="detail"></div>
+          <div class="panel-h"><h2>판단할 권고<span class="cnt" id="recCnt"></span></h2></div>
+          <div id="recs"></div>
+          <p class="footnote">승인한 것만 현장으로 갑니다. 운전 조작은 DCS에서만 합니다. <a href="how.html">어떻게 연결되나요?</a></p>
         </section>
         <section class="panel">
-          <div class="panel-h"><h2>CCR 판단 대기 권고<span class="cnt" id="recCnt"></span></h2><span class="note">승인한 것만 현장으로 갑니다</span></div>
-          <div class="recs" id="recs"></div>
-        </section>
-      </div>
-
-      <div class="grid2">
-        <section class="panel">
-          <div class="panel-h"><h2>현장 지시 현황</h2><span class="note">미응답 30초면 빨갛게 표시</span></div>
-          <div id="orders"></div>
-        </section>
-        <section class="panel">
-          <div class="panel-h"><h2>이력</h2><span class="note">감지 → 판단 → 지시 → 조치 기록</span></div>
-          <ol class="log" id="log"></ol>
-        </section>
-      </div>
-
-      <section class="panel">
-        <div class="panel-h"><h2>데모 컨트롤 <span class="note">(가상 DCS 데이터)</span></h2><span class="note" id="simStat"></span></div>
-        <div class="faults" id="faults"></div>
-        <div class="sim-c">
-          <button class="btn sm" type="button" id="runBtn">일시정지</button>
-          <div class="seg" role="group" aria-label="진행 속도">
-            <button type="button" data-speed="1" aria-pressed="true">보통</button>
-            <button type="button" data-speed="2" aria-pressed="false">빠르게</button>
-            <button type="button" data-speed="4" aria-pressed="false">매우 빠르게</button>
+          <div class="tabs" role="tablist" id="tabs" aria-label="상세 보기">
+            <button type="button" role="tab" data-tab="trend" aria-selected="true">추세</button>
+            <button type="button" role="tab" data-tab="orders" aria-selected="false">현장 지시<span class="cnt" id="ordCnt"></span></button>
+            <button type="button" role="tab" data-tab="log" aria-selected="false">이력</button>
           </div>
-          <label class="note"><input type="checkbox" id="autoInj"> 자동으로 이상 발생</label>
-          <button class="btn sm" type="button" id="resetBtn">처음부터 다시</button>
-          <span class="note">발표용으로 공정 변화 속도를 압축했습니다 (수십 분 걸릴 변화를 수십 초로).</span>
-        </div>
-      </section>
+          <div data-pane="trend" role="tabpanel"><div class="pane-t" id="detTitle"></div><div id="detail"></div></div>
+          <div data-pane="orders" role="tabpanel" hidden><div id="orders"></div></div>
+          <div data-pane="log" role="tabpanel" hidden><ol class="log" id="log"></ol></div>
+        </section>
+      </div>
     </main>
 
     <aside class="ccr-side" aria-label="현장 작업자 단말 미리보기">
       <div class="side-h"><b>현장 작업자 단말</b><span class="note">미리보기 · 실제 휴대폰에도 같은 화면이 뜹니다</span></div>
       <div class="phone" id="embedPhone"></div>
-      <section class="panel connect" id="connect"></section>
+      <details class="panel connect"><summary>휴대폰 연결하기</summary><div id="connect"></div></details>
     </aside>
   </div>
+
+  <section class="drawer" id="drawer" hidden aria-label="데모 컨트롤">
+    <div class="panel-h"><h2>데모 컨트롤 <span class="note">(가상 DCS 데이터)</span></h2><button class="btn sm ghost" type="button" id="demoClose">닫기</button></div>
+    <div class="faults" id="faults"></div>
+    <div class="sim-c">
+      <button class="btn sm" type="button" id="runBtn">일시정지</button>
+      <div class="seg" role="group" aria-label="진행 속도">
+        <button type="button" data-speed="1" aria-pressed="true">보통</button>
+        <button type="button" data-speed="2" aria-pressed="false">빠르게</button>
+        <button type="button" data-speed="4" aria-pressed="false">매우 빠르게</button>
+      </div>
+      <label class="note"><input type="checkbox" id="autoInj"> 자동으로 이상 발생</label>
+      <button class="btn sm" type="button" id="resetBtn">처음부터 다시</button>
+    </div>
+    <p class="note" id="simStat" style="margin:8px 0 0"></p>
+    <p class="note" style="margin:4px 0 0">발표용으로 공정 변화 속도를 압축했습니다 (수십 분 걸릴 변화를 수십 초로).</p>
+  </section>
 </div>
 
 <div id="wroot" class="w-standalone" hidden></div>
@@ -602,27 +590,28 @@ function initCCR(){
   Bus.send('reset',{sid:S.sid});renderSim();renderCCR();schedule();
 }
 
-/* ---------- CCR 화면 ---------- */
+/* ---------- CCR 화면 (한 화면 요약형) ---------- */
+S.tab='trend';S.focus=null;
+const URG=r=>r.safety?3:r.sev==='bad'?2:1;
+// 운전 한계까지 얼마나 다가갔나 (0 = 설정값, 1 = 한계)
+const NEAR=r=>{const V=VAR(r.tag),v=last(S.vars[r.tag].h),lim=r.dir==='H'?V.hi:V.lo;return lim==null?0:(v-V.sp)/(lim-V.sp)};
+// 판단 대기 권고: 보류 아닌 것 → 급한 것(안전 > 이탈 > 예고) → 한계에 더 가까운 것
+const sortedRecs=()=>S.recs.filter(r=>r.status==='pending'||r.status==='hold')
+  .sort((a,b)=>(a.status==='hold')-(b.status==='hold')||URG(b)-URG(a)||NEAR(b)-NEAR(a));
+const activeOrders=()=>S.orders.filter(o=>o.status==='sent'||o.status==='ack'||o.status==='help');
 function niceStep(x){const p=Math.pow(10,Math.floor(Math.log10(x)));const m=x/p;return (m<1.5?1:m<3?2:m<7?5:10)*p}
-function sparkSVG(V,s){
-  const h=s.h.slice(-40),top=V.hi!=null?V.hi:V.sp+(V.sp-V.lo),bot=V.lo!=null?V.lo:V.sp-(V.hi-V.sp);
-  const hi=Math.max(top,...h),lo=Math.min(bot,...h),x=i=>(i*80/(h.length-1)).toFixed(1),y=v=>(1+(hi-v)*16/(hi-lo||1)).toFixed(1);
-  const col=s.st==='bad'?'var(--bad)':s.st==='pre'?'var(--accent)':'var(--muted)';
-  const lim=v=>`<line x1="0" x2="80" y1="${y(v)}" y2="${y(v)}" stroke="var(--bad)" stroke-width="1" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" opacity=".7"/>`;
-  return (V.hi!=null?lim(V.hi):'')+(V.lo!=null?lim(V.lo):'')+`<polyline points="${h.map((v,i)=>x(i)+','+y(v)).join(' ')}" fill="none" stroke="${col}" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
-}
 function buildFlow(){
   $('flow').innerHTML=STEPS.map(st=>`<div class="step"><div class="step-h"><span class="sn">${st.n}</span><b>${st.name}</b><span class="zn">${st.zone}</span></div>`+
-    VARS.filter(V=>V.step===st.id).map(V=>`<button type="button" class="vrow" data-tag="${V.tag}"><span class="vr-top"><span class="vn">${esc(V.name)}</span><span data-chip></span></span><span class="vr-mid"><span class="vv num" data-v></span><span class="vu">${esc(V.unit)}</span></span><span class="vr-bot"><span class="vt mono">${V.tag}</span><svg class="spk" viewBox="0 0 80 18" preserveAspectRatio="none" aria-hidden="true" data-spk></svg></span></button>`).join('')+`</div>`).join('');
+    VARS.filter(V=>V.step===st.id).map(V=>`<button type="button" class="vrow" data-tag="${V.tag}" title="${V.tag} · 운전 범위 ${esc(rangeTxt(V))}"><span class="vn">${esc(V.name)}</span><span data-chip></span><span class="vv num" data-v></span><span class="vu">${esc(V.unit)}</span></button>`).join('')+`</div>`).join('');
 }
+const CHIP={sent:'지시됨',ack:'조치 중',help:'지원 요청',done:'보고됨'};
 function updateFlow(){
   $('flow').querySelectorAll('.vrow').forEach(b=>{const V=VAR(b.dataset.tag),s=S.vars[V.tag];if(!s)return;
     b.className=`vrow st-${s.st}${V.tag===S.sel?' sel':''}`;
     b.querySelector('[data-v]').textContent=fmt(last(s.h),V.dec);
     const ord=openOrd(V.tag),rec=openRec(V.tag);
-    const chip=ord?`<span class="chipx o">${ORDST[ord.status]}</span>`:rec?'<span class="chipx r">권고 대기</span>':'';
+    const chip=ord?`<span class="chipx o">${CHIP[ord.status]||''}</span>`:rec?'<span class="chipx r">권고</span>':'';
     const c=b.querySelector('[data-chip]');if(c.dataset.h!==chip){c.innerHTML=chip;c.dataset.h=chip}
-    b.querySelector('[data-spk]').innerHTML=sparkSVG(V,s);
     b.setAttribute('aria-label',`${V.name} ${fmt(last(s.h),V.dec)} ${V.unit}, ${STTXT[s.st]}`)});
 }
 function bigChart(V,s){
@@ -637,53 +626,67 @@ function bigChart(V,s){
   if(pH!=null)g+=`<rect x="${PL}" y="${y(V.hi)}" width="${W-PL-PR}" height="${Math.max(0,y(pH)-y(V.hi))}" fill="var(--accent-soft)"/>`;
   if(pL!=null)g+=`<rect x="${PL}" y="${y(pL)}" width="${W-PL-PR}" height="${Math.max(0,y(V.lo)-y(pL))}" fill="var(--accent-soft)"/>`;
   const stp=niceStep((hi-lo)/4),td=Math.max(0,-Math.floor(Math.log10(stp)+1e-9));
-  for(let t=Math.ceil(lo/stp)*stp;t<=hi+1e-9;t+=stp)g+=`<line x1="${PL}" x2="${W-PR}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${PL-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="var(--f-mono)">${t.toFixed(td)}</text>`;
-  const hl=(v,col,dash,lab)=>v==null?'':`<line x1="${PL}" x2="${W-PR}" y1="${y(v)}" y2="${y(v)}" stroke="${col}" stroke-width="1.6" ${dash?`stroke-dasharray="${dash}"`:''}/><text x="${PL+6}" y="${y(v)-5}" font-size="11" font-weight="600" fill="${col}" font-family="var(--f-mono)">${lab} ${fmt(v,V.dec)}</text>`;
+  for(let t=Math.ceil(lo/stp)*stp;t<=hi+1e-9;t+=stp)g+=`<line x1="${PL}" x2="${W-PR}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${PL-8}" y="${y(t)+4}" text-anchor="end" font-size="12" fill="var(--muted)" font-family="var(--f-mono)">${t.toFixed(td)}</text>`;
+  const hl=(v,col,dash,lab)=>v==null?'':`<line x1="${PL}" x2="${W-PR}" y1="${y(v)}" y2="${y(v)}" stroke="${col}" stroke-width="1.6" ${dash?`stroke-dasharray="${dash}"`:''}/><text x="${PL+6}" y="${y(v)-5}" font-size="12" font-weight="600" fill="${col}" font-family="var(--f-mono)">${lab} ${fmt(v,V.dec)}</text>`;
   g+=hl(V.hi,'var(--bad)','6 4','H 한계')+hl(V.lo,'var(--bad)','6 4','L 한계')+hl(V.sp,'var(--muted)','','SP');
   g+=`<path d="${h.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)).join('')}" fill="none" stroke="var(--fg)" stroke-width="1.6" stroke-linejoin="round" opacity=".85"/>`;
   if(fc){const lim=fc.b>0?V.hi:V.lo,xc=x(n-1+fc.steps);
-    g+=`<line x1="${x(n-1)}" y1="${y(fc.yl)}" x2="${x(n-1+ext)}" y2="${y(fc.yl+fc.b*ext)}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="${xc}" cy="${y(lim)}" r="6" fill="none" stroke="var(--bad)" stroke-width="2"/><text x="${Math.min(xc,W-PR-30)}" y="${y(lim)+(fc.b>0?-12:20)}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--bad)">도달 예상</text>`}
+    g+=`<line x1="${x(n-1)}" y1="${y(fc.yl)}" x2="${x(n-1+ext)}" y2="${y(fc.yl+fc.b*ext)}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="${xc}" cy="${y(lim)}" r="6" fill="none" stroke="var(--bad)" stroke-width="2"/><text x="${Math.min(xc,W-PR-30)}" y="${y(lim)+(fc.b>0?-12:20)}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--bad)">도달 예상</text>`}
   g+=`<circle cx="${x(n-1)}" cy="${y(last(h))}" r="5" fill="${stCol(s.st)}" stroke="var(--surface)" stroke-width="2"/>`;
-  g+=`<text x="${PL}" y="${H-6}" font-size="10.5" fill="var(--muted)">${Math.round(n*INTERVAL/S.speed/1000)}초 전</text><text x="${x(n-1)}" y="${H-6}" text-anchor="${fc?'middle':'end'}" font-size="10.5" fill="var(--muted)">현재</text>`;
-  if(fc)g+=`<text x="${W-PR}" y="${H-6}" text-anchor="end" font-size="10.5" fill="var(--accent)" font-weight="600">예측 →</text>`;
+  g+=`<text x="${PL}" y="${H-6}" font-size="11" fill="var(--muted)">${Math.round(n*INTERVAL/S.speed/1000)}초 전</text><text x="${x(n-1)}" y="${H-6}" text-anchor="${fc?'middle':'end'}" font-size="11" fill="var(--muted)">현재</text>`;
+  if(fc)g+=`<text x="${W-PR}" y="${H-6}" text-anchor="end" font-size="11" fill="var(--accent)" font-weight="600">예측 →</text>`;
   return g+'</svg>';
 }
 function renderDetail(){
-  const V=VAR(S.sel),s=S.vars[V.tag];$('detTitle').textContent=`${V.name} 추세 · ${V.tag}`;
-  const info=[['현재값',`<span class="num" style="color:${stCol(s.st)}">${fmt(last(s.h),V.dec)}</span> ${esc(V.unit)}`],
-    ['상태',`<span class="pill ${s.st==='bad'?'bad':s.st==='pre'?'pre':'ok'}">${STTXT[s.st]}</span>`],
-    ['설정값 SP',`<span class="num">${fmt(V.sp,V.dec)}</span> ${esc(V.unit)}`],['운전 범위',esc(rangeTxt(V))],
-    ['영향 품질',esc(V.q)],['담당 구역',esc(zoneOf(V))]];
+  const V=VAR(S.sel),s=S.vars[V.tag];$('detTitle').textContent=`${V.name} · ${V.tag}`;
+  const info=[['현재값',`<span class="num" style="color:${stCol(s.st)}">${fmt(last(s.h),V.dec)}</span> ${esc(V.unit)} · ${STTXT[s.st]}`],
+    ['운전 범위',esc(rangeTxt(V))],['영향 품질',esc(V.q)]];
   $('detail').innerHTML=`<div class="chart">${bigChart(V,s)}</div><div class="dinfo">${info.map(([k,v])=>`<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`+
     (s.st!=='ok'?`<p class="dreason" style="color:${stCol(s.st)}">${esc(s.reason)}</p>`:'')+
-    `<div class="legend"><span><i class="lg-l" style="border-color:var(--bad);border-top-style:dashed"></i>운전 한계 (DCS 알람값)</span><span><i class="lg-b"></i>예고 구간 (한계까지 남은 30%)</span><span><i class="lg-l" style="border-color:var(--accent);border-top-style:dashed"></i>추세 예측</span></div>`;
+    `<div class="legend"><span><i class="lg-l" style="border-color:var(--bad);border-top-style:dashed"></i>운전 한계</span><span><i class="lg-b"></i>예고 구간</span><span><i class="lg-l" style="border-color:var(--accent);border-top-style:dashed"></i>추세 예측</span></div>`;
 }
-function renderKpis(){
-  const nOk=VARS.filter(V=>S.vars[V.tag].st==='ok').length,pend=S.recs.filter(r=>r.status==='pending'||r.status==='hold').length;
-  const actv=S.orders.filter(o=>o.status==='sent'||o.status==='ack'||o.status==='help').length,acked=S.orders.filter(o=>o.ackAt);
+// 맨 위 배너: 지금 CCR이 해야 할 일 한 줄 + 숫자 4개
+function renderStatus(){
+  const recs=sortedRecs(),act=activeOrders(),nOk=VARS.filter(V=>S.vars[V.tag].st==='ok').length,acked=S.orders.filter(o=>o.ackAt);
   const avg=acked.length?Math.round(acked.reduce((a,o)=>a+(o.ackAt-o.sentAt),0)/acked.length/1000):null;
-  $('kpis').innerHTML=`<div><b style="color:${nOk===VARS.length?'var(--ok)':'var(--bad)'}">${nOk}/${VARS.length}</b><span>정상 변수</span></div>`+
-    `<div><b style="color:${pend?'var(--warn)':'inherit'}">${pend}</b><span>CCR 판단 대기 권고</span></div>`+
-    `<div><b>${actv}</b><span>현장 진행 중 지시</span></div><div><b>${avg==null?'–':avg+'초'}</b><span>평균 현장 응답</span></div>`;
+  const top=recs.find(r=>r.status!=='hold'),help=act.filter(o=>o.status==='help').length,wait=act.filter(o=>o.status==='sent').length;
+  let cls,ic,title,sub;
+  if(top){const V=VAR(top.tag);cls=top.safety||top.sev==='bad'?'bad':'act';ic='!';
+    title=`판단할 권고 ${recs.filter(r=>r.status!=='hold').length}건`;sub=`가장 급한 것: ${V.name} ${titleOf(top.sev,top.dir)} — 아래에서 승인·보류·오경보 중 하나를 고르세요`}
+  else if(act.length){cls=help?'act':'run';ic=help?'!':'→';title=help?`현장 지원 요청 ${help}건`:`현장 조치 진행 중 ${act.length}건`;
+    sub=help?'작업자가 지원을 요청했습니다. 현장 지시 탭을 확인하세요':wait?`${wait}건은 작업자 응답을 기다리는 중`:'작업자가 조치하고 있습니다'}
+  else if(recs.length){cls='act';ic='‖';title=`보류 중인 권고 ${recs.length}건`;sub='보류를 풀거나 오경보로 처리하세요'}
+  else{cls='ok';ic='✓';title='정상 운전 중';sub=nOk===VARS.length?'모든 공정 변수가 정상 범위입니다':`${VARS.length-nOk}개 변수가 정상 범위로 돌아오는 중입니다`;
+    if(!S.faults.length)sub+=' · 데모 컨트롤에서 이상 상황을 넣어 볼 수 있습니다'}
+  $('now').className='now '+cls;
+  $('now').innerHTML=`<span class="ic" aria-hidden="true">${ic}</span><div class="msg"><b>${esc(title)}</b><span>${esc(sub)}</span></div>`+
+    `<div class="mini"><div><b style="color:${nOk===VARS.length?'var(--ok)':'var(--bad)'}">${nOk}/${VARS.length}</b>정상 변수</div><div><b>${recs.length}</b>판단 대기</div><div><b>${act.length}</b>진행 중 지시</div><div><b>${avg==null?'–':avg+'초'}</b>평균 현장 응답</div></div>`;
+  $('ordCnt').textContent=act.length||'';
 }
 const recLive=(V,s)=>`현재 <b class="num">${fmt(last(s.h),V.dec)}${esc(V.unit)}</b>${s.st==='ok'?' <span class="okback">지금은 정상 범위</span>':''}`;
+// 판단할 권고: 가장 급한 1건만 펼치고, 나머지는 한 줄 목록
 function renderRecs(){
-  D.recs=false;const list=S.recs.filter(r=>r.status==='pending'||r.status==='hold');
-  $('recCnt').textContent=list.length||'';
+  D.recs=false;const list=sortedRecs();$('recCnt').textContent=list.length||'';
   const ae=document.activeElement,aid=ae&&$('recs').contains(ae)?ae.id:null,ss=aid&&ae.selectionStart,se=aid&&ae.selectionEnd;
-  if(!list.length){$('recs').innerHTML='<div class="empty">대기 중인 권고가 없습니다.<br>이상 조짐이 보이면 여기에 조치안이 올라오고, CCR이 판단합니다.</div>';return}
-  $('recs').innerHTML=list.map(r=>{const V=VAR(r.tag),s=S.vars[r.tag],a=actOf(r.tag,r.dir);
-    return `<article class="rec sev-${r.safety?'safety':r.sev}${r.status==='hold'?' hold':''}">
-      <div class="rec-h"><span class="pill ${r.safety||r.sev==='bad'?'bad':'pre'}">${r.safety?'안전':r.sev==='bad'?'이탈':'예고'}</span>${r.esc?'<span class="pill bad">악화</span>':''}${r.status==='hold'?'<span class="pill">보류</span>':''}<b>${esc(V.name)}</b><span class="mono muted" style="font-size:.74rem">${V.tag}</span><span class="tm">${hms(r.at)}</span></div>
-      <div class="rec-r">${esc(r.reason)} · <span data-rv="${r.id}">${recLive(V,s)}</span></div>
-      <div class="rec-i">예상 영향: ${esc(a.impact)}</div>
-      ${r.safety?'<div class="rec-safe">안전 알람은 DCS 알람·SIS 인터록이 우선 처리합니다. 이 화면은 현장 전달 보조용이며, 현장 접근 여부는 CCR이 판단하세요.</div>':''}
-      <label class="lbl" for="rt-${r.id}">현장 지시 내용 (CCR이 고칠 수 있음)</label>
-      <textarea id="rt-${r.id}" data-rid="${r.id}" rows="2">${esc(r.draft.text)}</textarea>
-      <div class="rec-f"><label class="lbl-in">담당 <select id="rz-${r.id}" data-rid="${r.id}">${ZONES.map(z=>`<option${z===r.draft.zone?' selected':''}>${z}</option>`).join('')}</select></label>
-        <div class="seg" role="group" aria-label="우선순위">${['긴급','일반'].map(p=>`<button type="button" data-pri="${p}" data-rid="${r.id}" aria-pressed="${r.draft.pri===p}">${p}</button>`).join('')}</div></div>
-      <div class="rec-b"><button type="button" class="btn primary" data-send="${r.id}">승인 · 현장 지시 전송</button><button type="button" class="btn" data-hold="${r.id}">${r.status==='hold'?'보류 해제':'보류'}</button><button type="button" class="btn ghost" data-dismiss="${r.id}">오경보로 처리</button></div>
-    </article>`}).join('');
+  if(!list.length){$('recs').innerHTML='<div class="okstate"><b>판단할 권고가 없습니다</b>이상 조짐이 보이면 여기에 조치안이 하나씩 올라옵니다.</div>';return}
+  const r=list.find(x=>x.id===S.focus)||list[0]; // 사용자가 고른 권고가 없으면 배너와 같은 '가장 급한 것'
+  const V=VAR(r.tag),s=S.vars[r.tag],a=actOf(r.tag,r.dir);
+  let h=`<article class="focus sev-${r.safety?'safety':r.sev}${r.status==='hold'?' hold':''}">
+    <div class="f-h"><span class="pill ${r.safety||r.sev==='bad'?'bad':'pre'}">${r.safety?'안전':r.sev==='bad'?'이탈':'예고'}</span>${r.esc?'<span class="pill bad">악화</span>':''}${r.status==='hold'?'<span class="pill">보류</span>':''}<span class="mono muted" style="font-size:.72rem">${V.tag}</span><span class="tm">${hms(r.at)}</span></div>
+    <div class="f-t">${esc(V.name)} ${titleOf(r.sev,r.dir)}</div>
+    <div class="f-r">${esc(r.reason)} · <span data-rv="${r.id}">${recLive(V,s)}</span></div>
+    <div class="f-i">예상 영향: ${esc(a.impact)}</div>
+    ${r.safety?'<div class="rec-safe">안전 알람은 DCS·SIS가 우선 처리합니다. 현장 접근 여부는 CCR이 판단하세요.</div>':''}
+    <div class="f-act"><div class="lbl"><span class="note">현장에 보낼 지시</span>${r.editing?'':`<button type="button" class="linkbtn" data-edit="${r.id}">문구 수정</button>`}</div>
+      ${r.editing?`<textarea id="rt-${r.id}" data-rid="${r.id}" rows="3" aria-label="현장 지시 내용">${esc(r.draft.text)}</textarea>`:esc(r.draft.text)}</div>
+    <div class="f-f"><label class="lbl-in">담당 <select id="rz-${r.id}" data-rid="${r.id}">${ZONES.map(z=>`<option${z===r.draft.zone?' selected':''}>${z}</option>`).join('')}</select></label>
+      <div class="seg" role="group" aria-label="우선순위">${['긴급','일반'].map(p=>`<button type="button" data-pri="${p}" data-rid="${r.id}" aria-pressed="${r.draft.pri===p}">${p}</button>`).join('')}</div></div>
+    <div class="f-b"><button type="button" class="btn primary" data-send="${r.id}">승인 · 현장 지시 전송</button><button type="button" class="btn" data-hold="${r.id}">${r.status==='hold'?'보류 해제':'보류'}</button><button type="button" class="btn ghost" data-dismiss="${r.id}">오경보</button></div>
+  </article>`;
+  const others=list.filter(x=>x!==r);
+  if(others.length)h+=`<div class="others"><span class="note">다른 권고 ${others.length}건 · 눌러서 보기</span>${others.map(o=>{const OV=VAR(o.tag);
+    return `<button type="button" class="orow" data-focus="${o.id}"><span class="dot ${o.safety||o.sev==='bad'?'st-bad':'st-pre'}"></span><span>${esc(OV.name)} ${titleOf(o.sev,o.dir)}</span>${o.status==='hold'?'<span class="pill">보류</span>':''}<span class="tm">${hms(o.at)}</span></button>`}).join('')}</div>`;
+  $('recs').innerHTML=h;
   if(aid){const n=$(aid);if(n){n.focus();try{n.setSelectionRange(ss,se)}catch(e){}}}
 }
 function updateRecsLive(){$('recs').querySelectorAll('[data-rv]').forEach(sp=>{const r=S.recs.find(x=>x.id===+sp.dataset.rv);if(r)sp.innerHTML=recLive(VAR(r.tag),S.vars[r.tag])})}
@@ -696,7 +699,7 @@ function ordDetail(o){const sec=t=>Math.round(t/1000);
   return o.cancelled?'CCR 취소':esc(o.result||'');}
 function renderOrders(){
   D.orders=false;const list=S.orders.slice(0,12);
-  if(!list.length){$('orders').innerHTML='<div class="empty">아직 보낸 지시가 없습니다.<br>권고를 검토하고 "승인 · 현장 지시 전송"을 누르면 담당 단말로 갑니다.</div>';return}
+  if(!list.length){$('orders').innerHTML='<div class="empty">아직 보낸 지시가 없습니다.<br>권고를 승인하면 여기에서 현장 응답을 따라갈 수 있습니다.</div>';return}
   $('orders').innerHTML=`<div class="ords">${list.map(o=>`<div class="ord st-${o.status}" data-oid="${o.id}">
     <div><div class="ord-t"><span class="pill ${o.pri==='긴급'?'bad':''}">${o.pri}</span> ${esc(o.title)}</div><div class="ord-s">${esc(o.zone)} 담당 · ${hms(o.sentAt)} · ${esc(o.by)}${o.esc?' · <b style="color:var(--bad)">악화 재알림</b>':''}</div></div>
     <div class="ord-m"><span class="pill ${ordPill(o)}">${ORDST[o.status]}</span><span data-od>${ordDetail(o)}</span></div>
@@ -706,27 +709,33 @@ function renderOrders(){
 function updateOrdersLive(){$('orders').querySelectorAll('[data-oid]').forEach(row=>{const o=S.orders.find(x=>x.id===+row.dataset.oid);if(!o)return;
   if(o.status==='sent'){row.querySelector('[data-od]').textContent=`응답 대기 ${Math.round((Date.now()-o.sentAt)/1000)}초`;row.classList.toggle('overdue',Date.now()-o.sentAt>OVERDUE)}else row.classList.remove('overdue')})}
 function renderLog(){D.log=false;$('log').innerHTML=S.log.slice(0,60).map(l=>`<li><span class="tm">${hms(l.t)}</span><span class="k ${l.kind}">${LOGK[l.kind]||l.kind}</span><span>${esc(l.text)}</span></li>`).join('')||'<li class="empty">이력이 없습니다</li>'}
+function setTab(t){
+  S.tab=t;document.querySelectorAll('#tabs [data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));
+  document.querySelectorAll('#ccr [data-pane]').forEach(p=>p.hidden=p.dataset.pane!==t);
+  if(t==='trend')renderDetail();else if(t==='orders')renderOrders();else renderLog();
+}
 function renderHeader(){
   const devs=Object.values(S.devices).filter(d=>Date.now()-d.at<25000&&!d.embedded).length;let cls,txt;
-  if(Bus.mode==='server'){cls=Bus.ok?'on':'err';txt=Bus.ok?`서버 연동 · 현장 단말 ${devs}대 접속 중`:'서버 응답 없음'}
-  else{cls='local';txt='로컬 데모 (휴대폰 연결은 서버로 열어야 함)'}
+  if(Bus.mode==='server'){cls=Bus.ok?'on':'err';txt=Bus.ok?`서버 연동 · 현장 단말 ${devs}대`:'서버 응답 없음'}
+  else{cls='local';txt='로컬 데모'}
   $('conn').className='conn '+cls;$('conn').lastElementChild.textContent=txt;
-  $('ccrSnd').textContent=S.snd?'CCR 알림음 켬':'CCR 알림음 끔';$('ccrSnd').setAttribute('aria-pressed',String(S.snd));
+  $('ccrSnd').textContent=S.snd?'알림음 켬':'알림음 끔';$('ccrSnd').setAttribute('aria-pressed',String(S.snd));
 }
 function buildSim(){$('faults').innerHTML=Object.entries(FAULTS).map(([k,F])=>`<button type="button" data-fault="${k}"${k==='o2'?' class="safety"':''}><b>${esc(F.label)}</b><span>${esc(F.desc)}</span></button>`).join('')}
 function renderSim(){
   $('faults').querySelectorAll('[data-fault]').forEach(b=>b.disabled=S.faults.some(f=>f.key===b.dataset.fault));
   $('simStat').textContent=S.faults.length?'진행 중: '+S.faults.map(f=>FAULTS[f.key].label+(f.rec?' (회복 중)':'')).join(', '):'진행 중인 이상 상황 없음';
   $('runBtn').textContent=S.running?'일시정지':'재개';
+  $('demoBtn').textContent=S.faults.length?`데모 컨트롤 · ${S.faults.length}건 진행`:'데모 컨트롤';
   document.querySelectorAll('[data-speed]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.speed===S.speed)));
 }
 function renderCCR(){
-  renderHeader();renderKpis();updateFlow();renderDetail();
+  renderHeader();renderStatus();updateFlow();if(S.tab==='trend')renderDetail();
   if(D.recs)renderRecs();else updateRecsLive();
   if(D.orders)renderOrders();else updateOrdersLive();
   if(D.log)renderLog();
 }
-function renderNow(){renderKpis();updateFlow();if(D.recs)renderRecs();if(D.orders)renderOrders();if(D.log)renderLog()}
+function renderNow(){renderStatus();updateFlow();if(D.recs)renderRecs();if(D.orders)renderOrders();if(D.log)renderLog()}
 function drawQR(url){
   const box=$('qr');if(!box)return;
   if(typeof qrcode!=='function'){window.addEventListener('load',()=>{if(typeof qrcode==='function')drawQR(url)},{once:true});return}
@@ -736,18 +745,24 @@ function renderConnect(){
   const c=$('connect');
   if(Bus.mode==='server'&&Bus.info){
     const urls=(Bus.info.ips||[]).map(ip=>`http://${ip}${Bus.info.port==80?'':':'+Bus.info.port}/w`);
-    c.innerHTML=`<b>현장 단말 연결</b><span class="note">같은 Wi-Fi의 휴대폰·전용 단말에서 QR을 찍거나 아래 주소로 접속하세요.</span>${urls.length?'<div class="qr" id="qr"></div>':''}${urls.map(u=>`<span class="url">${esc(u)}</span>`).join('')}<a class="btn sm" href="?role=worker" target="_blank" rel="noopener">이 PC에서 작업자 화면 새 탭으로 열기</a>`;
+    c.innerHTML=`<span class="note">같은 Wi-Fi의 휴대폰·전용 단말에서 QR을 찍거나 아래 주소로 접속하세요.</span>${urls.length?'<div class="qr" id="qr"></div>':''}${urls.map(u=>`<span class="url">${esc(u)}</span>`).join('')}<a class="btn sm" href="?role=worker" target="_blank" rel="noopener">이 PC에서 작업자 화면 새 탭으로 열기</a>`;
     if(urls.length)drawQR(urls[0]);
   }else{
-    c.innerHTML=`<b>현장 단말 연결</b><span class="note">지금은 서버 없이(파일·온라인 버전) 열려 있어 이 화면 안의 미리보기 단말만 연결됩니다. 실제 휴대폰을 연결하려면 이 폴더에서 serve.ps1로 서버를 띄우고 <span class="mono">http://localhost/c</span>로 여세요. 휴대폰용 주소와 QR이 여기에 표시됩니다.</span>`;
+    c.innerHTML=`<span class="note">지금은 서버 없이(파일·온라인 버전) 열려 있어 오른쪽 미리보기 단말만 연결됩니다. 실제 휴대폰을 연결하려면 발표 PC에서 serve.ps1로 서버를 띄우고 <span class="mono">http://localhost/c</span>로 여세요.</span>`;
   }
 }
+function toggleDrawer(open){const d=$('drawer');open=open==null?d.hidden:open;d.hidden=!open;$('demoBtn').setAttribute('aria-expanded',String(open))}
 function bindCCR(){
   const root=$('ccr');
   root.addEventListener('click',e=>{
     const t=e.target;if(t.closest('#embedPhone'))return;let b,r;
-    if(b=t.closest('.vrow')){S.sel=b.dataset.tag;updateFlow();renderDetail();return}
-    if(b=t.closest('[data-send]')){r=S.recs.find(x=>x.id===+b.dataset.send);if(r&&(r.status==='pending'||r.status==='hold'))dispatch(r)}
+    if(b=t.closest('.vrow')){S.sel=b.dataset.tag;updateFlow();setTab('trend');return}
+    if(b=t.closest('[data-tab]')){setTab(b.dataset.tab);return}
+    if(t.closest('#demoBtn')){toggleDrawer();return}
+    if(t.closest('#demoClose')){toggleDrawer(false);return}
+    if(b=t.closest('[data-send]')){r=S.recs.find(x=>x.id===+b.dataset.send);if(r&&(r.status==='pending'||r.status==='hold')){dispatch(r);S.focus=null;setTab('orders')}}
+    else if(b=t.closest('[data-focus]')){S.focus=+b.dataset.focus;D.recs=true}
+    else if(b=t.closest('[data-edit]')){r=S.recs.find(x=>x.id===+b.dataset.edit);if(r){r.editing=true;D.recs=true;renderRecs();const ta=$('rt-'+r.id);if(ta)ta.focus();return}}
     else if(b=t.closest('[data-hold]')){r=S.recs.find(x=>x.id===+b.dataset.hold);if(r){r.status=r.status==='hold'?'pending':'hold';D.recs=true;logE('ccr',`${S.op}: ${VAR(r.tag).name} 권고 ${r.status==='hold'?'보류':'보류 해제'}`)}}
     else if(b=t.closest('[data-dismiss]')){r=S.recs.find(x=>x.id===+b.dataset.dismiss);if(r){r.status='dismissed';S.vars[r.tag].supp=RANK[r.sev];D.recs=true;logE('ccr',`${S.op}: ${VAR(r.tag).name} 권고를 오경보로 처리 (현장 지시 안 함)`)}}
     else if(b=t.closest('[data-pri]')){r=S.recs.find(x=>x.id===+b.dataset.rid);if(r){r.draft.pri=b.dataset.pri;D.recs=true}}
@@ -766,6 +781,7 @@ function bindCCR(){
   root.addEventListener('change',e=>{const t=e.target;
     if(t.matches('select[data-rid]')){const r=S.recs.find(x=>x.id===+t.dataset.rid);if(r)r.draft.zone=t.value}
     if(t.id==='autoInj')S.auto=t.checked});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('drawer').hidden)toggleDrawer(false)});
   $('opName').value=S.op;
 }
 
