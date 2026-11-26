@@ -97,6 +97,13 @@ pre.fmt{margin:0;background:var(--surface-2);border-radius:7px;padding:10px;font
 .msg.err{color:var(--bad)} .msg.okm{color:var(--ok)}
 .rules{margin:0;padding-left:18px;color:var(--muted);font-size:.84rem;display:flex;flex-direction:column;gap:4px}
 @media (prefers-reduced-motion:no-preference){.pt{transition:r .12s}}
+/* 처음 보는 사람 기준: 결론(요약 3건)과 관리도만 펼쳐 두고, 표·데이터 입력은 접어 둠 */
+details.fold>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:"▸";color:var(--muted);font-size:.9rem;transition:transform .15s}
+details.fold[open]>summary::before{transform:rotate(90deg)}
+details.fold>summary h2{display:inline}
+.summary li.more{display:block;background:none;padding:0}
 </style>
 </head>
 <body>
@@ -140,20 +147,21 @@ pre.fmt{margin:0;background:var(--surface-2);border-radius:7px;padding:10px;font
     <div class="limits" id="limits"></div>
   </section>
 
-  <section class="panel">
-    <div class="panel-head">
-      <h2>LOT별 검사 결과</h2>
+  <details class="panel fold" id="foldTbl">
+    <summary><h2>LOT별 검사 결과</h2><span class="note" id="tblNote">전체 lot 표 펼치기</span></summary>
+    <div class="panel-head" style="margin-top:12px">
+      <span class="note">셀에 마우스를 올리면 판정 이유가 나옵니다</span>
       <div class="seg" role="group" aria-label="표시 범위">
         <button type="button" id="fAll" aria-pressed="true">전체</button>
         <button type="button" id="fBad" aria-pressed="false">이상 lot만</button>
       </div>
     </div>
     <div class="table-wrap"><table id="tbl"></table></div>
-  </section>
+  </details>
 
-  <section class="panel">
-    <div class="panel-head">
-      <h2>데이터 넣기</h2>
+  <details class="panel fold">
+    <summary><h2>데이터 넣기 · 판정 규칙</h2><span class="note">내 CSV로 다시 계산하기</span></summary>
+    <div class="panel-head" style="margin-top:12px">
       <span class="note">엑셀에서 CSV로 저장한 내용을 붙여넣거나 파일을 올리면 바로 다시 계산합니다</span>
     </div>
     <div class="grid2">
@@ -181,7 +189,7 @@ PG-261102,2026-11-02,99.948,4.97</pre>
         <div class="note">σ는 이동범위(MR) 평균 ÷ 1.128로 추정합니다 (I-MR 관리도).</div>
       </div>
     </div>
-  </section>
+  </details>
 </div>
 
 <script>
@@ -216,7 +224,7 @@ function makeSample(){
 
 /* ---------- 상태 ---------- */
 let ITEMS=SAMPLE_ITEMS, ROWS=makeSample(), isSample=true;
-let active=0, baseN=15, onlyBad=false, selLot=null;
+let active=0, baseN=15, onlyBad=false, selLot=null, showAllSum=false;
 try{const t=localStorage.getItem('lotqc.tab');if(t!==null)active=+t||0}catch(e){}
 
 /* ---------- 분석 ---------- */
@@ -290,7 +298,11 @@ function renderSummary(){
   });
   out.sort((a,b)=>(a.sev===b.sev?0:a.sev==='bad'?-1:1)||b.i-a.i);
   if(!out.length){$('summary').innerHTML=`<li><span class="pill ok">정상</span><span class="txt">모든 항목이 관리상태입니다. 이상 신호가 없습니다.</span></li>`;return}
-  $('summary').innerHTML=out.map(o=>`<li><span class="pill ${o.sev}">${o.sev==='bad'?'이탈':'주의'}</span><span class="txt">${o.html}<span class="act">점검 포인트: ${esc(o.act||'해당 공정 조건 기록을 확인하세요.')}</span></span></li>`).join('');
+  // 처음엔 가장 중요한 3건만 (이탈 먼저, 최근 순). 나머지는 버튼으로 펼침
+  const shown=showAllSum?out:out.slice(0,3);
+  $('summary').innerHTML=shown.map(o=>`<li><span class="pill ${o.sev}">${o.sev==='bad'?'이탈':'주의'}</span><span class="txt">${o.html}<span class="act">점검 포인트: ${esc(o.act||'해당 공정 조건 기록을 확인하세요.')}</span></span></li>`).join('')+
+    (out.length>3?`<li class="more"><button type="button" class="btn" id="moreSum">${showAllSum?'중요한 3건만 보기':`나머지 ${out.length-3}건 더 보기`}</button></li>`:'');
+  const mb=$('moreSum');if(mb)mb.onclick=()=>{showAllSum=!showAllSum;renderSummary()};
 }
 function renderTabs(){
   $('tabs').innerHTML=ITEMS.map((it,k)=>`<button class="tab" role="tab" type="button" id="tab-${k}" aria-selected="${k===active}" data-k="${k}"><i class="dot ${RES[k].sev}"></i>${esc(it.name)}${it.unit?` <span class="note">(${esc(it.unit)})</span>`:''}</button>`).join('');
@@ -337,7 +349,7 @@ function renderChart(){
       tip.style.left=(cb.left-xb.left+box.scrollLeft+cb.width/2)+'px';tip.style.top=(cb.top-xb.top)+'px';tip.hidden=false});
     c.addEventListener('mouseleave',()=>tip.hidden=true);
     c.addEventListener('click',()=>{selLot=ROWS[+c.dataset.i].lot;renderChart();renderTable();
-      const tr=document.querySelector(`tr[data-lot="${CSS.escape(selLot)}"]`);if(tr)tr.scrollIntoView({block:'nearest',behavior:'smooth'})});
+      $('foldTbl').open=true;const tr=document.querySelector(`tr[data-lot="${CSS.escape(selLot)}"]`);if(tr)tr.scrollIntoView({block:'nearest',behavior:'smooth'})});
   });
   const cpkTxt=r.cpk==null?'–':r.cpk.toFixed(2);
   const cpkCls=r.cpk==null?'':r.cpk>=1.33?'color:var(--ok)':r.cpk>=1?'color:var(--warn)':'color:var(--bad)';
@@ -356,6 +368,8 @@ function renderTable(){
     h+=`<td><span class="pill ${sv}">${sv==='bad'?'이탈':sv==='warn'?'주의':'정상'}</span></td></tr>`});
   if(!idx.length)h+=`<tr><td colspan="${ITEMS.length+3}" style="text-align:center;color:var(--muted)">이상 lot이 없습니다.</td></tr>`;
   $('tbl').innerHTML=h+'</tbody>';
+  const nb=ROWS.filter((_,i)=>lotSev(i)!=='ok').length;
+  $('tblNote').textContent=`${ROWS.length}개 lot 중 이상 ${nb}개 · 눌러서 펼치기 (관리도 점을 눌러도 열립니다)`;
 }
 function renderBaseSel(){
   const opts=[10,15,20].filter(v=>v<ROWS.length);opts.push(ROWS.length);
